@@ -1,12 +1,6 @@
-// A simple Hello World contract
-new helloworld in {
-    contract helloworld( world ) = {
-        for( msg <- world ) {
-            print(msg)
-        }
-    } |
-    new world in {
-        helloworld!(world) |
-        world!("Hello World")
-    }
+new ack, stdout(`rho:io:stdout`), stdoutAck(`rho:io:stdoutAck`) in {
+  stdoutAck!("hello, world!", *ack) |
+  for (_ <- ack) {
+    stdout!("received")
+  }
 }

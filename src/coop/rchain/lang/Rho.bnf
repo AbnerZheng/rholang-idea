@@ -161,7 +161,7 @@ Name_ ::= "_" | NameVar | AT Proc12 {
    implements = [ "coop.rchain.lang.psi.RhoNamedElement" ]
    mixin = "coop.rchain.lang.psi.RhoNamedElementImpl"
 }
-RhoName ::= Name_ ("," Name_)*
+RhoName ::= Name_ (COMMA Name_)*
 
 // Bundle
 Bundle ::= "bundle+" | "bundle-" | "bundle0" | "bundle"
@@ -188,7 +188,7 @@ Case ::= Case_+
 
 // Name Declarations
 // Eventually will have IOPairs.
-NameDecl ::= NameDecl_ ("," NameDecl_)*
+NameDecl ::= NameDecl_ (COMMA NameDecl_)*
 NameDecl_ ::= NameVar OPEN_PAREN URI CLOSE_PAREN | NameVar
 
 // Booleans:
@@ -199,14 +199,15 @@ Ground ::= Bool | Integer | StringLit | URI
 
 // Collections:
 private CollectList ::= OPEN_SQUARE_BRACKET [Proc] ProcRemainder CLOSE_SQUARE_BRACKET
-private CollectTuple ::= Tuple
 private CollectSet ::= "Set" "(" [Proc] ")"
-private CollectMap ::= "{" [KeyValuePair] "}"
+
+// we use Proc_ here instead of Proc to avoid confusion of Grammar kit
+private CollectTuple ::= OPEN_PAREN Proc_ (COMMA Proc_)+ CLOSE_PAREN | OPEN_PAREN Proc ",)"
+CollectMap ::= "{" [KeyValuePair] "}"
 
 // important: we use Proc_ here, because if we use Proc, they will all consume COMMA
 private KeyValuePair_ ::= Proc COLON Proc_
 KeyValuePair ::= KeyValuePair_ (COMMA KeyValuePair_)*
-private Tuple ::= OPEN_PAREN Proc ",)" | OPEN_PAREN Proc COMMA [Proc] CLOSE_PAREN
 
 
 

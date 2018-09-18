@@ -15,5 +15,10 @@ new testResult, philosopher1, philosopher2 in {
   } |
   for(_ <- philosopher1; _ <- philosopher2) {
     testResult!(true)
-  }
+  } |
+  for(@(suit1,rank1)<-p1Ch; @{suit2,rank2,rank3,rank4}<-p2ch){
+    testResult!(true)
+  } |
+  (1,) | (1,2) | (1,2,3)
+
 }

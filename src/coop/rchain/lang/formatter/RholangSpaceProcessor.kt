@@ -3,15 +3,9 @@ package coop.rchain.lang.formatter
 import com.intellij.formatting.Block
 import com.intellij.formatting.Spacing
 import com.intellij.lang.ASTNode
-import com.intellij.openapi.editor.Document
-import com.intellij.openapi.util.TextRange
-import com.intellij.psi.PsiElement
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings
 import com.intellij.psi.formatter.common.AbstractBlock
-import com.intellij.psi.tree.IElementType
-import com.intellij.psi.util.PsiTreeUtil
 import coop.rchain.lang.psi.RhoTypes
-import coop.rchain.lang.util.PsiTreeHelpUtil
 
 class RholangSpaceProcessor(private val myNode: ASTNode, private val mySettings: CommonCodeStyleSettings) {
 
@@ -20,7 +14,6 @@ class RholangSpaceProcessor(private val myNode: ASTNode, private val mySettings:
       return null
     }
 
-    val elementType = myNode.elementType
     val parentType = if (myNode.treeParent == null) null else myNode.treeParent.elementType
     val node1 = child1.node
     val type1 = node1.elementType
@@ -28,7 +21,7 @@ class RholangSpaceProcessor(private val myNode: ASTNode, private val mySettings:
     val type2 = node2.elementType
 
     if (type1 === RhoTypes.OPEN_BRACE && (type2 === RhoTypes.PROC || type2 === RhoTypes.CASE)) {
-      if(parentType !== RhoTypes.NAME_) {
+      if (parentType !== RhoTypes.NAME_) {
         return Spacing.createSpacing(1, 1, 1, false, 0)
       }
     }
@@ -36,11 +29,11 @@ class RholangSpaceProcessor(private val myNode: ASTNode, private val mySettings:
       return Spacing.createSpacing(1, 1, 1, false, 0)
     }
 
-    if(type1 === RhoTypes.CASE_ || type2 === RhoTypes.CASE_){
+    if (type1 === RhoTypes.CASE_ || type2 === RhoTypes.CASE_) {
       return Spacing.createSpacing(1, 1, 1, false, 0)
     }
 
-    if(type2 === RhoTypes.CLOSE_BRACE && parentType === RhoTypes.NAME_){
+    if (type2 === RhoTypes.CLOSE_BRACE && (parentType === RhoTypes.NAME_ || myNode.elementType === RhoTypes.COLLECT_MAP)) {
       return null
     }
 

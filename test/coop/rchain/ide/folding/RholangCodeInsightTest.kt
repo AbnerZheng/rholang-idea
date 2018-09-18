@@ -14,32 +14,39 @@ class RholangCodeInsightTest : LightCodeInsightFixtureTestCase() {
   }
 
   fun testFolding() {
-    doTestFolding("blockDocComment")
     doTestFolding("procedure")
   }
 
-  fun testFormatter() {
+  private fun doFormatterTest(testName: String) {
     object : WriteCommandAction.Simple<Any>(project) {
       @Throws(Throwable::class)
       override fun run() {
-        myFixture.configureByFiles("./ide/formatter/token.rho")
+        myFixture.configureByFiles("./ide/formatter/$testName.rho")
         CodeStyleManager.getInstance(project).reformatText(myFixture.file,
           ContainerUtil.newArrayList<TextRange>(myFixture.file.textRange))
       }
     }.execute()
-    myFixture.checkResultByFile("./ide/formatter/tokenFormatted.rho")
+    myFixture.checkResultByFile("./ide/formatter/${testName}Formatted.rho")
   }
 
-  fun testFormatter2() {
-    object : WriteCommandAction.Simple<Any>(project) {
-      @Throws(Throwable::class)
-      override fun run() {
-        myFixture.configureByFiles("./ide/formatter/simpleOne.rho")
-        CodeStyleManager.getInstance(project).reformatText(myFixture.file,
-          ContainerUtil.newArrayList<TextRange>(myFixture.file.textRange))
-      }
-    }.execute()
-    myFixture.checkResultByFile("./ide/formatter/simpleOneFormatted.rho")
+  fun testComplex() {
+    doFormatterTest("complex")
+  }
+
+  fun testUri() {
+    doFormatterTest("URI")
+  }
+
+  fun testIfElse() {
+    doFormatterTest("ifElse")
+  }
+
+  fun testMapMethod(){
+    doFormatterTest("mapMethods")
+  }
+
+  fun testParens(){
+    doFormatterTest("parens")
   }
 
   private fun doTestFolding(testName: String) {

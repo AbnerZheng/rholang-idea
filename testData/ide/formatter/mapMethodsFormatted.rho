@@ -1,9 +1,9 @@
 // all methods modifying the underlying collection return new Map
 // prints 1
-new stdout in { stdout!({"one" : 2, "two" : 2, "three" : 3}.get("one")) |
+new stdout in {
+  stdout!({"one" : 2, "two" : 2, "three" : 3}.get("one")) |
   // if element is not present in the map will return Nil -- prints Nil
-  stdout!({
-  "one" : 1, "two" : 2, "three" : 3}.get("four")) |
+  stdout!({"one" : 1, "two" : 2, "three" : 3}.get("four")) |
   // prints false
   stdout!({"one" : 1, "two" : 2, "three" : 3}.contains("four")) |
   // prints true
