@@ -13,10 +13,13 @@
 .idea/**/sqlDataSources.xml
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
+.idea/kotlinc.xml
 
 # Gradle:
 .idea/**/gradle.xml
 .idea/**/libraries
+.idea/misc.xml
+.idea/rholang-idea.iml
 
 # CMake
 cmake-build-debug/
